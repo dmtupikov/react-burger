@@ -1,0 +1,22 @@
+.wrap {
+  text-align:right;
+  width:600px;
+}
+
+.list {
+  display:flex;
+  flex-direction:column;
+  width:600px;
+  max-height:600px;
+  overflow:auto;
+}
+.footer {
+  display:flex;
+  flex-direction:row;
+  justify-content:flex-end
+}
+.total {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}

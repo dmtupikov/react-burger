@@ -1,0 +1,31 @@
+.wrap {
+  width:600px;
+}
+.list {
+  max-height:520px;
+  overflow:auto;
+}
+.items {
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between; 
+    flex-wrap:wrap;
+    width:100%;
+}
+
+.item {
+    width:50%;
+    text-align:center;
+}
+
+.price {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.name {
+    display:block;
+    text-align:center;
+    min-height:48px;
+}
