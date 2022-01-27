@@ -18,7 +18,7 @@ class AppHeader extends React.Component {
 	        </nav>
 	        <Logo />
 	        <div className={Styles.auth}>
-	            <span><ProfileIcon type="secondary" /><p className={[Styles.secondary, 'ml-2'].join(' ')}>Личный кабинет</p></span>
+	            <span><ProfileIcon type="secondary" /><p className={[Styles.secondary, 'ml-2', 'text text_type_main-default'].join(' ')}>Личный кабинет</p></span>
 	        </div>
 	    </div>
       </header>
