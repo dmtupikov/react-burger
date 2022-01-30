@@ -16,7 +16,7 @@ function App() {
 
   const [ modal, setModal ] = React.useState({
     visability: false,
-    content: ''
+    content: null
   })
 
   const handleOpenModal = (content) => {
@@ -27,12 +27,17 @@ function App() {
     setModal({ ...modal, visability:false })
   }
 
-  const url = 'https://norma.nomoreparties.space/api/ingredientssd';
+  const url = 'https://norma.nomoreparties.space/api/ingredients';
 
   React.useEffect(() => {
     const getProducts = async () => {
       fetch(url)
-        .then(res => res.json())
+        .then(res => {
+          if (res.ok) {
+            return res.json();
+          }
+          return Promise.reject(res.status);
+        })
         .then(data => setState({...state, products:data.data, isLoading: false }))
         .catch(e => {
           setState({ ...state, hasError: true, isLoading: false });

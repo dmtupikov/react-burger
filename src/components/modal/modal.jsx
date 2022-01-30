@@ -21,19 +21,21 @@ function Modal({visability, children, onClose}) {
   }, [onPressEsc]);
 
   return ReactDOM.createPortal(
-    <ModalOverlay visability={visability}>
+  	<div className={visability ? styles.wrap_active : styles.wrap}>
+      <ModalOverlay onClose={onClose} />
       <div className={styles.modal}>
         {children}
         <button className={styles.close} onClick={onClose}><img src={close} alt="Закрыть" title="Закрыть"/></button>
-      </div>      
-    </ModalOverlay>,
+      </div>
+    </div>      
+    ,
     modalRoot
   );
 }
 
 Modal.propTypes = {
   visability: PropTypes.bool.isRequired,
-  children: PropTypes.string.isRequired,
+  children: PropTypes.object,
   onClose: PropTypes.func.isRequired
 };
 

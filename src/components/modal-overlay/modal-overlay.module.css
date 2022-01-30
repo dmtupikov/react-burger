@@ -1,6 +1,5 @@
 .overlay {
   position:fixed;
-  display:none;
   top:0;
   left:0;
   right:0;
@@ -8,9 +7,3 @@
   background:rgba(0,0,0,0.6);
 }
 
-.overlay_active {
-  composes: overlay;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}

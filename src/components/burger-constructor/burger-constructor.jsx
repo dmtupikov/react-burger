@@ -8,16 +8,33 @@ import productPropTypes from '../../utils/product-prop-types';
 
 function BurgerConstructor({products, handleOpenModal, num}) {
   const productsLength = products.length;
+  const bun = (productsLength > 0) ? products.find(product => product.type === 'bun') : null;
 
   const openOrderDetails = () => {
     const content = <OrderDetails />
     handleOpenModal(content);
   }
 
+  const createConstructorElement = (product, num, position = false) => {
+    if (position) {
+      return (
+        <ConstructorElement text={product.name + ((position === 'top') ? ' (верх)' : ' (низ)')} isLocked={true} price={product.price} thumbnail={product.image} key={num} type={position} />
+      )
+    } else {
+      return (
+        <ConstructorElement text={product.name} price={product.price} thumbnail={product.image} key={num} /> 
+      )
+    }
+  }
+
   return (
     <section className={styles.wrap + ' mt-15'} key={num}>
       <div className={styles.list + ' mt-4'}>
-        {products.map((product, index) => <ConstructorElement text={product.name} price={product.price} thumbnail={product.image} type={(index === 0) ? 'top' : (index === (productsLength - 1)) ? 'bottom' : 'undefined' } key={index} /> )}
+        {(productsLength > 0) && createConstructorElement(bun, (productsLength+1), 'top')}
+        <div className={styles.main}>
+          {(productsLength > 0) && products.map((product, index) => (product.type !== 'bun') && createConstructorElement(product, index))}
+        </div>
+        {(productsLength > 0) && createConstructorElement(bun, (productsLength+2), 'bottom')}
       </div>
       <div className={styles.footer + ' mt-10'}>
         <span className={styles.total + ' mr-10'}>
