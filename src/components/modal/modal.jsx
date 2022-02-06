@@ -9,9 +9,9 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 function Modal({visability, children, onClose}) {
   const modalRoot = document.getElementById("react-modals");
 
-  const onPressEsc = (e) => {
+  const onPressEsc = React.useCallback((e) => {
     if (e.key === 'Escape') onClose();
-  };
+  }, []);
 
   React.useEffect(() => {
     document.addEventListener('keydown', onPressEsc);

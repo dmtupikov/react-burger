@@ -4,7 +4,7 @@ import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-dev
 
 function AppHeader() {
   return (
-    <header className="m-10">
+    <header className="mb-10">
       <div className={styles.conteiner}>
         <nav className="pt-4 pb-4 text text_type_main-default">
           <ul className={styles.menu}>
