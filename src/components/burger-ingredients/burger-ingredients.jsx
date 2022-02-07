@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsList from './ingredients-list';
-import productPropTypes from '../../utils/product-prop-types';
 
 
-function BurgerIngredients({products, handleOpenModal}) {
+function BurgerIngredients({handleOpenModal}) {
   const [current, setCurrent] = React.useState('one');
   return (
     <section className={styles.wrap + ' mr-10'}>
@@ -23,16 +22,15 @@ function BurgerIngredients({products, handleOpenModal}) {
         </Tab>
       </div>
       <div className={styles.list}>
-        <IngredientsList products={products} name="Булки" ename="bun" openModal={handleOpenModal} />
-        <IngredientsList products={products} name="Соусы" ename="sauce" openModal={handleOpenModal} />
-        <IngredientsList products={products} name="Начинки" ename="main" openModal={handleOpenModal} />
+        <IngredientsList name="Булки" ename="bun" openModal={handleOpenModal} />
+        <IngredientsList name="Соусы" ename="sauce" openModal={handleOpenModal} />
+        <IngredientsList name="Начинки" ename="main" openModal={handleOpenModal} />
 	  </div>
 	</section>
   );
 }
 
 BurgerIngredients.propTypes = {
-  products: PropTypes.arrayOf(productPropTypes.isRequired),
   handleOpenModal: PropTypes.func.isRequired
 };
 
