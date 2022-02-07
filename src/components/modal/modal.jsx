@@ -11,7 +11,7 @@ function Modal({visability, children, onClose}) {
 
   const onPressEsc = React.useCallback((e) => {
     if (e.key === 'Escape') onClose();
-  }, []);
+  }, [onClose]);
 
   React.useEffect(() => {
     document.addEventListener('keydown', onPressEsc);

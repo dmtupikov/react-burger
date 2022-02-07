@@ -2,7 +2,6 @@ import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import IngredientItem from './ingredient-item';
-import productPropTypes from '../../utils/product-prop-types';
 import { ProductsContext } from '../../services/productsContext.jsx';
 
 
