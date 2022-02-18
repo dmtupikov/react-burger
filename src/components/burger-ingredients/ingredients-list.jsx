@@ -1,22 +1,33 @@
-import React, {useContext} from 'react';
+import React, {forwardRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import IngredientItem from './ingredient-item';
-import { ProductsContext } from '../../services/productsContext.jsx';
+
+import { getItems } from '../../services/actions/ingredients';
+import { useDispatch, useSelector } from 'react-redux';
 
 
+const IngredientsList = forwardRef(({ name, ename, openModal}, ref ) => {
+  const dispatch = useDispatch();
+  const { items } = useSelector(
+    state => state.ingredients
+  );
 
-function IngredientsList({ name, ename, openModal }) {
-  const { dataProducts } = useContext(ProductsContext);
+  useEffect(
+    () => {
+      dispatch(getItems());
+    },
+    [dispatch]
+  );
   return (
-    <div className={styles.list_item + ' mb-8'}>
+    <div ref={ref} className={styles.list_item + ' mb-8'}>
       <h2 className="text text_type_main-medium">{name}</h2>
 	    <div className={styles.items}>
-		    {dataProducts.map((product, index) => (product.type === ename) && <IngredientItem key={product._id} product={product} count={Math.floor(Math.random() * 3)} openModal={openModal} />)}
+		    {items.map((product, index) => (product.type === ename) && <IngredientItem key={product._id} product={product} openModal={openModal} />)}
 	    </div>
     </div>
   )
-};
+});
 
 IngredientsList.propTypes = {
   name: PropTypes.string.isRequired,

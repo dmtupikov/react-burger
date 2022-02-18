@@ -5,15 +5,36 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import productPropTypes from '../../utils/product-prop-types';
 
+import { useSelector } from 'react-redux';
+import { useDrag } from 'react-dnd';
 
-const IngredientItem = ({ product, count, openModal }) => {
+
+const IngredientItem = ({ product, openModal }) => {
   const openIngredintCard = (e) => {
-    const content = <IngredientDetails image={product.image_large} name={product.name} calories={product.calories} proteins={product.proteins} fat={product.fat} carbohydrates={product.carbohydrates} />
+    const content = <IngredientDetails id={product._id} />
     openModal(content);
   }
 
+  const { ingredients } = useSelector(
+    state => state.ingredients.constructor
+  );
+
+  const [{ opacity }, ref] = useDrag({
+    type: 'items',
+    item: {id:product._id},
+    collect: monitor => ({
+      opacity: monitor.isDragging() ? 0.5 : 1
+    })
+  });
+
+  let count = 0;
+  ingredients.forEach(function(item) {
+    if (item === product._id) count = count+1;
+  })
+
+
   return (
-  <div className={styles.item + ' mt-6 mb-2'} onClick={openIngredintCard}>
+  <div className={styles.item + ' mt-6 mb-2'} style={{ opacity }} onClick={openIngredintCard} ref={ref}>
     <img src={product.image} alt={product.name}/>
     <span className={styles.price + ' mt-1 mb-1'}><span className="text text_type_digits-default mr-2">{product.price}</span><CurrencyIcon type="primary" /></span>
     <span className={styles.name + ' text text_type_main-default'}>{product.name}</span> 
@@ -23,9 +44,8 @@ const IngredientItem = ({ product, count, openModal }) => {
 };
 
 IngredientItem.propTypes = {
-  dataProducts: PropTypes.arrayOf(productPropTypes.isRequired),
-  openModal: PropTypes.func.isRequired,
-  count: PropTypes.number
+  product: productPropTypes.isRequired,
+  openModal: PropTypes.func.isRequired
 };
 
 
