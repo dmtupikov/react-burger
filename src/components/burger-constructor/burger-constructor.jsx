@@ -1,19 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {useMemo} from 'react';
 import ConstructorIngredient from './constructor-ingredient';
 import styles from './burger-constructor.module.css';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import OrderDetails from '../order-details/order-details';
 
-import { ADD_BUN_CONSTRUCTOR, ADD_INGREDIENT_CONSTRUCTOR, MOVE_ITEM_CONSTRUCTOR, getOrder } from '../../services/actions/ingredients';
+import { ADD_BUN_CONSTRUCTOR, ADD_INGREDIENT_CONSTRUCTOR, MOVE_ITEM_CONSTRUCTOR, RESET_CONSTRUCTOR } from '../../services/actions/constructor';
+import { getOrder } from '../../services/actions/order';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 
 
-function BurgerConstructor({handleOpenModal}) { 
+function BurgerConstructor() { 
 
-  const { items, constructor, total } = useSelector(
+  const { items } = useSelector(
     state => state.ingredients
+  );
+  const { ingredients, bun } = useSelector(
+    state => state.construct
   );
   const dispatch = useDispatch();
   const moveItem = (item) => {
@@ -32,31 +34,19 @@ function BurgerConstructor({handleOpenModal}) {
   };
 
   const [, dropTarget] = useDrop({
-    accept: 'items',
+    accept:'items',
     drop(itemId) {
       moveItem(itemId)
     },
-
   });
 
   const openOrderDetails = () => {
-    if (constructor.bun != null) {
-      let ingredients = [...constructor.ingredients, constructor.bun, constructor.bun];
-      dispatch(getOrder(ingredients));
-      const content = <OrderDetails />
-      handleOpenModal(content);
-    } else handleOpenModal(<ModalError>Необходимо добавить булку</ModalError>);
+    if (bun != null) {
+      const orderIngredients = [...ingredients, bun, bun];
+      dispatch(getOrder(orderIngredients));
+      dispatch({type:RESET_CONSTRUCTOR});
+    }
   }
-
-  const ModalError = ({children}) => {
-    return (
-      <div className={'text text_type_main-large p-20'}>{children}</div>
-    )
-  }
-
-  ModalError.propTypes = {
-    children: PropTypes.string.isRequired,
-  }; 
 
   const moveItemSub = (item, monitor) => {
     const dist = monitor.getClientOffset().y - item.ref.current.getBoundingClientRect().y;
@@ -76,15 +66,24 @@ function BurgerConstructor({handleOpenModal}) {
     },
   });
 
+  const total = useMemo(() => {
+    let total = 0;
+    if (ingredients.length > 0) ingredients.map((item) => total += items.find(product => item === product._id).price);
+    if (bun != null) {
+      total += 2 * items.find(product => product._id === bun).price;
+    }
+    return total;
+  }, [ingredients, bun, items]);
+
 
   return (
     <section ref={dropTarget} className={styles.wrap + ' mt-15'}>
       <div className={styles.list + ' mt-4'}>
-        {(constructor.bun != null) && <ConstructorIngredient id={constructor.bun} position='top' /> }
+        {(bun != null) && <ConstructorIngredient id={bun} position='top' /> }
         <div className={styles.main} ref={dropTargetSub}>
-          {(constructor.ingredients.length > 0) && constructor.ingredients.map((product, index) => <ConstructorIngredient id={product} num={index} key={index} />)}
+          {(ingredients.length > 0) && ingredients.map((product, index) => <ConstructorIngredient id={product} num={index} key={index} />)}
         </div>
-        {(constructor.bun != null) && <ConstructorIngredient id={constructor.bun} position='bottom' />}
+        {(bun != null) && <ConstructorIngredient id={bun} position='bottom' />}
       </div>
       <div className={styles.footer + ' mt-10'}>
         <span className={styles.total + ' mr-10'}>
@@ -97,9 +96,5 @@ function BurgerConstructor({handleOpenModal}) {
     </section>
   );
 }
-
-BurgerConstructor.propTypes = {
-  handleOpenModal: PropTypes.func.isRequired,
-}; 
 
 export default BurgerConstructor;

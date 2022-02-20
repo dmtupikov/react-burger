@@ -1,23 +1,22 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {useMemo} from 'react';
 import styles from './burger-ingredients.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 import productPropTypes from '../../utils/product-prop-types';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { ADD_ITEM_OBJECT } from '../../services/actions/ingredients';
 import { useDrag } from 'react-dnd';
 
 
-const IngredientItem = ({ product, openModal }) => {
-  const openIngredintCard = (e) => {
-    const content = <IngredientDetails id={product._id} />
-    openModal(content);
-  }
-
-  const { ingredients } = useSelector(
-    state => state.ingredients.constructor
+const IngredientItem = ({ product }) => {
+  const dispatch = useDispatch();
+  const { ingredients, bun } = useSelector(
+    state => state.construct
   );
+
+  const openIngredintCard = (e) => {
+    dispatch({type:ADD_ITEM_OBJECT, id:product._id});
+  }
 
   const [{ opacity }, ref] = useDrag({
     type: 'items',
@@ -27,11 +26,19 @@ const IngredientItem = ({ product, openModal }) => {
     })
   });
 
-  let count = 0;
-  ingredients.forEach(function(item) {
-    if (item === product._id) count = count+1;
-  })
-
+  const count = useMemo(() => {
+    let count = 0;
+    if (product.type === 'bun') {
+      if (bun === product._id) count = 2;
+    } else {
+      ingredients.forEach(function(item) {
+        if (item === product._id) count = count+1;
+      })
+    }
+    return count;
+    },
+    [bun, ingredients, product]
+  );
 
   return (
   <div className={styles.item + ' mt-6 mb-2'} style={{ opacity }} onClick={openIngredintCard} ref={ref}>
@@ -44,8 +51,7 @@ const IngredientItem = ({ product, openModal }) => {
 };
 
 IngredientItem.propTypes = {
-  product: productPropTypes.isRequired,
-  openModal: PropTypes.func.isRequired
+  product: productPropTypes.isRequired
 };
 
 

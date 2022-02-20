@@ -5,12 +5,20 @@
 .list {
   display:flex;
   flex-direction:column;
+  align-items:flex-end;
   gap:10px;
   width:600px;
   height:600px;
 }
 .item {
+  width:100%;
   display:flex;
+  justify-content:flex-end;
+}
+.move_icon {
+  width:13px;
+  margin-right:10px;
+  cursor:move;
 }
 .main {
   composes:list;

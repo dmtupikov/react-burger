@@ -1,11 +1,10 @@
 import React, {useRef} from 'react';
-import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsList from './ingredients-list';
 
 
-function BurgerIngredients({handleOpenModal}) {
+function BurgerIngredients() {
   const [current, setCurrent] = React.useState('bun');
   const ref = useRef(null);
   const bunRef = useRef(null);
@@ -43,16 +42,12 @@ function BurgerIngredients({handleOpenModal}) {
         </Tab>
       </div>
       <div ref={ref} onScroll={onScroll} className={styles.list}>
-        <IngredientsList ref={bunRef} name="Булки" ename="bun" openModal={handleOpenModal} />
-        <IngredientsList ref={sauceRef} name="Соусы" ename="sauce" openModal={handleOpenModal} />
-        <IngredientsList ref={mainRef} name="Начинки" ename="main" openModal={handleOpenModal} />
+        <IngredientsList ref={bunRef} name="Булки" ename="bun" />
+        <IngredientsList ref={sauceRef} name="Соусы" ename="sauce" />
+        <IngredientsList ref={mainRef} name="Начинки" ename="main" />
 	    </div>
 	  </section>
   );
 }
-
-BurgerIngredients.propTypes = {
-  handleOpenModal: PropTypes.func.isRequired
-};
 
 export default BurgerIngredients;

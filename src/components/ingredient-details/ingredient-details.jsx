@@ -1,21 +1,12 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import styles from './ingredient-details.module.css';
-import { GET_ITEM_OBJECT } from '../../services/actions/ingredients';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-function IngredientDetails({id}) {
-  const dispatch = useDispatch();
+function IngredientDetails() {
   const { itemObject } = useSelector(
     state => state.ingredients
   );
 
-  useEffect(
-    () => {
-      dispatch({type:GET_ITEM_OBJECT, id:id});
-    },
-    [dispatch, id]
-  );
   const { image_large, name, calories, proteins, fat, carbohydrates } = itemObject;
   return (
     <div className={styles.wrap + ' pt-10 pb-15 pl-10 pr-10'}>
@@ -44,9 +35,5 @@ function IngredientDetails({id}) {
     </div>
   );
 }
-
-IngredientDetails.propTypes = {
-  id:PropTypes.string.isRequired,
-};
 
 export default IngredientDetails;
