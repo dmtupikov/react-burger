@@ -14,11 +14,7 @@
   width:100%;
   display:flex;
   justify-content:flex-end;
-}
-.move_icon {
-  width:13px;
-  margin-right:10px;
-  cursor:move;
+  align-items:center;
 }
 .main {
   composes:list;

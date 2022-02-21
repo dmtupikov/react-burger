@@ -1,8 +1,7 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
-import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import move from '../../images/move.svg';
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { DELETE_ITEM_CONSTRUCTOR } from '../../services/actions/constructor';
 import { useDispatch, useSelector } from 'react-redux';
@@ -31,7 +30,7 @@ const ConstructorIngredient = ({id, num, position}) => {
   } else {
     return (
       <div className={styles.item} ref={ref} key={num}>
-        <img className={styles.move_icon} src={move} alt="Переместить" title="Переместить"/>
+        <DragIcon type="primary" />
         <ConstructorElement text={product.name} price={product.price} thumbnail={product.image} handleClose={deleteIngredient}  />
       </div>
     )

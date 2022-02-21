@@ -3,6 +3,8 @@ import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
+import OrderDetails from '../order-details/order-details';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -35,6 +37,8 @@ function App() {
     [dispatch]
   );
 
+  const modalContent = (itemObject != null) ? (<IngredientDetails />) : ((orderObject != null) ? (<OrderDetails />) : null) 
+
   return (
     <div>
       <AppHeader />
@@ -46,8 +50,10 @@ function App() {
           </DndProvider>
         </div>
       </main>
-      { ((itemObject != null) || (orderObject != null)) && (
-        <Modal onClose={handleCloseModal} />
+      { (modalContent != null) && (
+        <Modal onClose={handleCloseModal}>
+          {modalContent}
+        </Modal>
       )}
     </div>
   );

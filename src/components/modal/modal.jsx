@@ -1,15 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import OrderDetails from '../order-details/order-details';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 import styles from './modal.module.css';
 import close from '../../images/close.svg';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { useSelector } from 'react-redux';
 
 
-function Modal({onClose}) {
+function Modal({onClose, children}) {
   const { itemObject } = useSelector(
     state => state.ingredients
   );
@@ -34,7 +32,7 @@ function Modal({onClose}) {
   	<div className={((itemObject != null) || (orderObject != null)) ? styles.wrap_active : styles.wrap}>
       <ModalOverlay onClose={onClose} />
       <div className={styles.modal}>
-        {(orderObject != null) ? (<OrderDetails />) : ((itemObject != null) ? (<IngredientDetails />) : (<div className={'text text_type_main-large p-20'}>ОШИБКА</div>)) }
+        {children}
         <button className={styles.close} onClick={onClose}><img src={close} alt="Закрыть" title="Закрыть"/></button>
       </div>
     </div>      
