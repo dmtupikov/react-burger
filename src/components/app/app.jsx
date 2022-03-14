@@ -28,7 +28,7 @@ function App() {
         <Route path="/ingredients/:id" exact={true}>
           { (!modal) ? <IngredientPage /> : <HomePage modal={modal} /> }
         </Route>
-        <ProtectedRoute path="/profile" exact={true}>
+        <ProtectedRoute path="/profile" exact={false}>
           <ProfilePage />
         </ProtectedRoute>
         <Route>
