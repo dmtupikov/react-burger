@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 
 
-const ConstructorIngredient = ({id, num, position}) => {
+const ConstructorIngredient = ({id, num, k, position}) => {
   const ref = useRef(null);
   const { items } = useSelector(
     state => state.ingredients
@@ -29,7 +29,7 @@ const ConstructorIngredient = ({id, num, position}) => {
     )
   } else {
     return (
-      <div className={styles.item} ref={ref} key={num}>
+      <div className={styles.item} ref={ref} key={k}>
         <DragIcon type="primary" />
         <ConstructorElement text={product.name} price={product.price} thumbnail={product.image} handleClose={deleteIngredient}  />
       </div>

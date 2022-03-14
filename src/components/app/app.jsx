@@ -1,16 +1,26 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route';
+import AppHeader from '../app-header/app-header';
 import { HomePage, ProfilePage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, IngredientPage, NotFound404 } from '../../pages';
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 
 
 function App() {
+  const location = useLocation();
+  const history = useHistory();
   const modal = (window.history.state != null) ? (window.history.state.modal || false) : false;
+  const background = location.state && location.state.background;
+  const returnFromModal = () => {
+    history.goBack();
+  };
   
   return (
-    <Router>
-      <Switch >
-        <Route path="/login">
+    <div>
+      <AppHeader />
+      <Switch location={background || location}>
+        <Route path="/login" exact={true}>
           <LoginPage />
         </Route>
         <Route path="/register" exact={true}>
@@ -35,7 +45,14 @@ function App() {
           <NotFound404 />
         </Route>
       </Switch>
-    </Router>
+      {background && (
+        <Route path='/ingredients/:id' exact={true}>
+          <Modal onClose={returnFromModal}>
+            <IngredientDetails />
+          </Modal>
+        </Route>
+      )}
+    </div>
   );
 }
 

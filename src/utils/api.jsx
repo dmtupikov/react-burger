@@ -1,14 +1,13 @@
 import { getCookie } from './cookie';
 const url = 'https://norma.nomoreparties.space/api/';
 
+const checkResponse = (res) => {
+  return res.ok ? res.json() : Promise.reject(res.status)
+};
+
 export const getData = async () => {
   return fetch(url + 'ingredients')
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    })
+    .then(checkResponse)
 }
 
 
@@ -22,12 +21,7 @@ export const getDataOrder = async (ingredients) => {
       ingredients: ingredients,
     })
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    });
+    .then(checkResponse)
 }
 
 export const forgotPasswordRequest = async (form) => {
@@ -43,12 +37,7 @@ export const forgotPasswordRequest = async (form) => {
     referrerPolicy: 'no-referrer',
     body: JSON.stringify(form)
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    });
+    .then(checkResponse)
 }
 
 export const resetPasswordRequest = async (form) => {
@@ -64,12 +53,7 @@ export const resetPasswordRequest = async (form) => {
     referrerPolicy: 'no-referrer',
     body: JSON.stringify(form)
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    });
+    .then(checkResponse)
 }
 
 export const authRequest = async (form, uri) => {
@@ -85,12 +69,7 @@ export const authRequest = async (form, uri) => {
     referrerPolicy: 'no-referrer',
     body: JSON.stringify(form)
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    });
+    .then(checkResponse)
 }
 
 export const getAuthRequest = async () => {
@@ -106,12 +85,7 @@ export const getAuthRequest = async () => {
     redirect: 'follow',
     referrerPolicy: 'no-referrer'
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    });
+    .then(checkResponse)
 }
 
 export const updateAuthRequest = async (form) => {
@@ -128,12 +102,7 @@ export const updateAuthRequest = async (form) => {
     referrerPolicy: 'no-referrer',
     body: JSON.stringify(form)
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    });
+    .then(checkResponse)
 }
 
 export const logoutRequest = async () => {
@@ -149,12 +118,7 @@ export const logoutRequest = async () => {
     referrerPolicy: 'no-referrer',
     body: JSON.stringify({ token: localStorage.refreshToken })
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    });
+    .then(checkResponse)
 }
 
 export const getAccessTokenRequest = async () => {
@@ -170,10 +134,5 @@ export const getAccessTokenRequest = async () => {
     referrerPolicy: 'no-referrer',
     body: JSON.stringify({ token: localStorage.refreshToken })
   })
-   .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    });
+    .then(checkResponse)
 };

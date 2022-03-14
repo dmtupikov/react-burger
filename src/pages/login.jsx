@@ -1,37 +1,29 @@
-import React, {useState, useCallback} from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../services/actions/auth';
 import styles from './auth.module.css';
-import AppHeader from '../components/app-header/app-header';
-import {EmailInput, PasswordInput, Button} from '@ya.praktikum/react-developer-burger-ui-components';
+import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function LoginPage() {
   
   const { logoutRequest } = useSelector(
     state => state.auth
   );
-  const history = useHistory();
   const dispatch = useDispatch();
   const [form, setValue] = useState({ email: '', password: '' });
   const onChange = e => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  let llogin = useCallback(
-    e => {
-      e.preventDefault();
-      dispatch(login(form, history.push('/')));
-    },
-    [dispatch, form, history]
-  );
-
-  
-  if (localStorage.refreshToken && (!logoutRequest)) history.push('/');
+  const llogin = e => {
+    e.preventDefault();
+    dispatch(login(form));
+  }
   
   return (
     <div>
-      <AppHeader />
+      {(localStorage.refreshToken && !logoutRequest) ? (<Redirect to='/' />) : (
       <div className={styles.conteiner + ' pt-20'}>
         <form onSubmit={llogin} >
           <h1 className="text text_type_main-medium">Вход</h1>
@@ -42,6 +34,7 @@ export function LoginPage() {
         <div className="text text_type_main-small text_color_inactive mt-20">Вы — новый пользователь? <Link to='/register' className={styles.link}>Зарегистрироваться</Link></div>
         <div className="text text_type_main-small text_color_inactive mt-4">Забыли пароль? <Link to='/forgot-password' className={styles.link}>Восстановить пароль</Link></div>
       </div>
+      )};
     </div>
-  );
+  )
 }

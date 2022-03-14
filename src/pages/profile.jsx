@@ -3,7 +3,6 @@ import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAuth, updateAuth, logout } from '../services/actions/auth';
 import styles from './profile.module.css';
-import AppHeader from '../components/app-header/app-header';
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function ProfilePage() {
@@ -30,9 +29,14 @@ export function ProfilePage() {
     e.preventDefault();
     dispatch(updateAuth(form));
   }
-  let llogout = e => {
+  
+  const redirect = () => {
+    history.push('/login')
+  };
+
+  const llogout = e => {
     e.preventDefault();
-    dispatch(logout(history.push('/login')));
+    dispatch(logout(redirect));
   };
   
   useEffect(
@@ -51,7 +55,6 @@ export function ProfilePage() {
 
   return (
     <div>
-      <AppHeader />
       <main>
         <div className={styles.conteiner + ' pt-20'}>
           <section className={styles.menu + ' mr-15'}>
@@ -63,11 +66,11 @@ export function ProfilePage() {
             <p className={styles.text + ' text text_type_main-default text_color_inactive mt-20'}>В этом разделе вы можете изменить свои персональные данные</p>
           </section>
           <section className={styles.about}>
-            <form >
+            <form onSubmit={save} >
               <div className="mt-6"><Input type={'text'} placeholder={'Имя'} onChange={onChange} icon={'CurrencyIcon'} value={form.name} name="name" error={false} ref={inputRef} onIconClick={onIconClick} errorText={'Ошибка'} size={'default'} /></div>
               <div className="mt-6"><EmailInput onChange={onChange} value={form.email} name="email" /></div>
               <div className="mt-6"><PasswordInput onChange={onChange} value={form.password} name={'password'} /></div>
-              <div className={styles.buttons + ' mt-6'}><button className={styles.cancel + ' text text_type_main-default pl-2 pr-2 mr-5'} onClick={cancel}>Отмена</button><Button onClick={save} type="primary" size="medium">Сохранить</Button></div>
+              <div className={styles.buttons + ' mt-6'}><button className={styles.cancel + ' text text_type_main-default pl-2 pr-2 mr-5'} onClick={cancel}>Отмена</button><Button type="primary" size="medium">Сохранить</Button></div>
             </form>
           </section>
         </div>

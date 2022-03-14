@@ -116,7 +116,7 @@ export const register = (form, redirect) => {
   };
 };
 
-export const login = (form, redirect) => {
+export const login = (form) => {
   return function(dispatch) {
     dispatch({
       type: LOGIN_REQUEST
@@ -132,7 +132,6 @@ export const login = (form, redirect) => {
             type: LOGIN_SUCCESS,
             user:res.user
           });
-          redirect();
         } else {
           dispatch({
             type: LOGIN_FAILED

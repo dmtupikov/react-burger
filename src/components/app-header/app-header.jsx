@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import styles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -14,7 +14,7 @@ function AppHeader() {
 	        <li className={styles.menu_item}><NavLink to='/lenta' className={styles.link} activeClassName={styles.active}><ListIcon type={ (pathname === '/lenta') ? 'primary' : 'secondary' } /><span className="ml-2">Лента заказов</span></NavLink></li>
 	      </ul>
 	    </nav>
-	    <Logo />
+	    <Link to=''><Logo /></Link>
 	    <div className={styles.auth}>
 	      <NavLink to='/profile' className={styles.link} activeClassName={styles.active}><ProfileIcon type={ (pathname === '/profile') ? 'primary' : 'secondary' } /><span className="ml-2 text text_type_main-default">Личный кабинет</span></NavLink>
 	    </div>

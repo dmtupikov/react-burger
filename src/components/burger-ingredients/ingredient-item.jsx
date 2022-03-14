@@ -1,24 +1,18 @@
 import React, { useMemo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './burger-ingredients.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import productPropTypes from '../../utils/product-prop-types';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { ADD_ITEM_OBJECT } from '../../services/actions/ingredients';
+import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 
 
 const IngredientItem = ({ product }) => {
-
-  const dispatch = useDispatch();
+  const location = useLocation();
   const { ingredients, bun } = useSelector(
     state => state.construct
   );
-
-  const openIngredintCard = (e) => {
-    window.history.replaceState({modal:true}, '', '/ingredients/' + product._id);
-    dispatch({type:ADD_ITEM_OBJECT, id:product._id});
-  }
 
   const [{ opacity }, ref] = useDrag({
     type: 'items',
@@ -43,12 +37,12 @@ const IngredientItem = ({ product }) => {
   );
 
   return (
-  <div className={styles.item + ' mt-6 mb-2'} style={{ opacity }} onClick={openIngredintCard} ref={ref}>
-    <img src={product.image} alt={product.name}/>
-    <span className={styles.price + ' mt-1 mb-1'}><span className="text text_type_digits-default mr-2">{product.price}</span><CurrencyIcon type="primary" /></span>
-    <span className={styles.name + ' text text_type_main-default'}>{product.name}</span> 
-    {count > 0 && <Counter count={count} size="default" />}
-  </div>
+    <Link to={{pathname: `/ingredients/${product._id}`, state: { background: location } }} className={styles.item + ' mt-6 mb-2'} style={{ opacity }} ref={ref}>
+      <img src={product.image} alt={product.name}/>
+      <span className={styles.price + ' mt-1 mb-1'}><span className="text text_type_digits-default mr-2">{product.price}</span><CurrencyIcon type="primary" /></span>
+      <span className={styles.name + ' text text_type_main-default'}>{product.name}</span> 
+      {count > 0 && <Counter count={count} size="default" />}
+    </Link>
   )
 };
 
