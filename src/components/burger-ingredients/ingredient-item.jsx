@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 import styles from './burger-ingredients.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import productPropTypes from '../../utils/product-prop-types';
@@ -9,12 +9,14 @@ import { useDrag } from 'react-dnd';
 
 
 const IngredientItem = ({ product }) => {
+
   const dispatch = useDispatch();
   const { ingredients, bun } = useSelector(
     state => state.construct
   );
 
   const openIngredintCard = (e) => {
+    window.history.replaceState({modal:true}, '', '/ingredients/' + product._id);
     dispatch({type:ADD_ITEM_OBJECT, id:product._id});
   }
 

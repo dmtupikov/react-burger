@@ -1,61 +1,41 @@
-import React, {useEffect} from 'react';
-import styles from './app.module.css';
-import AppHeader from '../app-header/app-header';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import OrderDetails from '../order-details/order-details';
-import IngredientDetails from '../ingredient-details/ingredient-details';
-import Modal from '../modal/modal';
-
-import { useSelector, useDispatch } from 'react-redux';
-import {getItems, RESET_ITEM_OBJECT} from '../../services/actions/ingredients';
-import {RESET_ORDER_OBJECT} from '../../services/actions/order';
-
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { DndProvider } from 'react-dnd';
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { ProtectedRoute } from '../protected-route';
+import { HomePage, ProfilePage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, IngredientPage, NotFound404 } from '../../pages';
 
 
 function App() {
-
-  const { itemObject } = useSelector(
-    state => state.ingredients
-  );
-  const { orderObject } = useSelector(
-    state => state.order
-  );
-  const dispatch = useDispatch();
-
-  const handleCloseModal = () => {
-    dispatch({type:RESET_ITEM_OBJECT});
-    dispatch({type:RESET_ORDER_OBJECT});
-  }
-
-  useEffect(
-    () => {
-      dispatch(getItems());
-    },
-    [dispatch]
-  );
-
-  const modalContent = (itemObject != null) ? (<IngredientDetails />) : ((orderObject != null) ? (<OrderDetails />) : null) 
-
+  const modal = (window.history.state != null) ? (window.history.state.modal || false) : false;
+  
   return (
-    <div>
-      <AppHeader />
-      <main>
-        <div className={styles.conteiner}>
-          <DndProvider backend={HTML5Backend}>
-            <BurgerIngredients key='1' />
-            <BurgerConstructor key='2' />
-          </DndProvider>
-        </div>
-      </main>
-      { (modalContent != null) && (
-        <Modal onClose={handleCloseModal}>
-          {modalContent}
-        </Modal>
-      )}
-    </div>
+    <Router>
+      <Switch >
+        <Route path="/login">
+          <LoginPage />
+        </Route>
+        <Route path="/register" exact={true}>
+          <RegisterPage />
+        </Route>
+        <Route path="/forgot-password" exact={true}>
+          <ForgotPasswordPage />
+        </Route>
+        <Route path="/reset-password" exact={true}>
+          <ResetPasswordPage />
+        </Route>
+        <Route path="/" exact={true}>
+          <HomePage />
+        </Route>
+        <Route path="/ingredients/:id" exact={true}>
+          { (!modal) ? <IngredientPage /> : <HomePage modal={modal} /> }
+        </Route>
+        <ProtectedRoute path="/profile" exact={true}>
+          <ProfilePage />
+        </ProtectedRoute>
+        <Route>
+          <NotFound404 />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 

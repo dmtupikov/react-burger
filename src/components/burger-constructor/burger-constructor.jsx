@@ -1,12 +1,15 @@
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDrop } from 'react-dnd';
+
 import ConstructorIngredient from './constructor-ingredient';
-import styles from './burger-constructor.module.css';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import styles from './burger-constructor.module.css';
 
 import { ADD_BUN_CONSTRUCTOR, ADD_INGREDIENT_CONSTRUCTOR, MOVE_ITEM_CONSTRUCTOR, RESET_CONSTRUCTOR } from '../../services/actions/constructor';
 import { getOrder } from '../../services/actions/order';
-import { useDispatch, useSelector } from 'react-redux';
-import { useDrop } from 'react-dnd';
 
 
 function BurgerConstructor() { 
@@ -18,6 +21,7 @@ function BurgerConstructor() {
     state => state.construct
   );
   const dispatch = useDispatch();
+  const history = useHistory();
   const moveItem = (item) => {
     const type = items.find(product => product._id === item.id).type;
     if (type === 'bun') {
@@ -41,10 +45,14 @@ function BurgerConstructor() {
   });
 
   const openOrderDetails = () => {
-    if (bun != null) {
-      const orderIngredients = [...ingredients, bun, bun];
-      dispatch(getOrder(orderIngredients));
-      dispatch({type:RESET_CONSTRUCTOR});
+    if (localStorage.refreshToken) {
+      if (bun != null) {
+        const orderIngredients = [...ingredients, bun, bun];
+        dispatch(getOrder(orderIngredients));
+        dispatch({type:RESET_CONSTRUCTOR});
+      }
+    } else {
+      history.push('/login');
     }
   }
 
