@@ -6,7 +6,7 @@ import close from '../../images/close.svg';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 
 
-function Modal({visability, children, onClose}) {
+function Modal({onClose, children}) {
   const modalRoot = document.getElementById("react-modals");
 
   const onPressEsc = React.useCallback((e) => {
@@ -21,7 +21,7 @@ function Modal({visability, children, onClose}) {
   }, [onPressEsc]);
 
   return ReactDOM.createPortal(
-  	<div className={visability ? styles.wrap_active : styles.wrap}>
+  	<div className={(children != null) ? styles.wrap_active : styles.wrap}>
       <ModalOverlay onClose={onClose} />
       <div className={styles.modal}>
         {children}
@@ -34,9 +34,8 @@ function Modal({visability, children, onClose}) {
 }
 
 Modal.propTypes = {
-  visability: PropTypes.bool.isRequired,
-  children: PropTypes.object,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.object.isRequired
 };
 
 export default Modal;
