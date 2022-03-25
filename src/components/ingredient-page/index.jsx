@@ -1,14 +1,16 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import styles from './ingredient-details.module.css';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
-function IngredientDetails() {
-  const { id } = useParams();
+import styles from './ingredient-page.module.css';
+
+const Ingredient = ({ product }) => {
+
   const { items } = useSelector(
     state => state.ingredients
   );
-  const ingredient = (items.length > 0) ? items.find(i => i._id === id) : {image_large:'',name:'',calories:'',proteins:'',fat:'',carbohydrates:''};
+  const ingredient = (items.length > 0) ? items.find(i => i._id === product) : {image_large:'',name:'',calories:'',proteins:'',fat:'',carbohydrates:''};
+
   return (
     <div className={styles.wrap + ' pt-10 pb-15 pl-10 pr-10'}>
       <p className={styles.header + ' text text_type_main-large'}>Детали ингредиента</p>
@@ -32,8 +34,13 @@ function IngredientDetails() {
           <p className={styles.component_value + ' text text_type_digits-default mt-2'}>{ingredient.carbohydrates}</p>
         </div>
       </div>
+
     </div>
   );
-}
+};
 
-export default IngredientDetails;
+Ingredient.propTypes = {
+  product: PropTypes.string.isRequired
+};
+
+export default Ingredient;

@@ -1,12 +1,16 @@
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDrop } from 'react-dnd';
+import { v4 as uuidv4 } from 'uuid';
+
 import ConstructorIngredient from './constructor-ingredient';
-import styles from './burger-constructor.module.css';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import styles from './burger-constructor.module.css';
 
 import { ADD_BUN_CONSTRUCTOR, ADD_INGREDIENT_CONSTRUCTOR, MOVE_ITEM_CONSTRUCTOR, RESET_CONSTRUCTOR } from '../../services/actions/constructor';
 import { getOrder } from '../../services/actions/order';
-import { useDispatch, useSelector } from 'react-redux';
-import { useDrop } from 'react-dnd';
 
 
 function BurgerConstructor() { 
@@ -18,6 +22,7 @@ function BurgerConstructor() {
     state => state.construct
   );
   const dispatch = useDispatch();
+  const history = useHistory();
   const moveItem = (item) => {
     const type = items.find(product => product._id === item.id).type;
     if (type === 'bun') {
@@ -36,15 +41,20 @@ function BurgerConstructor() {
   const [, dropTarget] = useDrop({
     accept:'items',
     drop(itemId) {
+      itemId.uuid = uuidv4();
       moveItem(itemId)
     },
   });
 
   const openOrderDetails = () => {
-    if (bun != null) {
-      const orderIngredients = [...ingredients, bun, bun];
-      dispatch(getOrder(orderIngredients));
-      dispatch({type:RESET_CONSTRUCTOR});
+    if (localStorage.refreshToken) {
+      if (bun != null) {
+        const orderIngredients = [...ingredients.map(item => item.id), bun, bun];
+        dispatch(getOrder(orderIngredients));
+        dispatch({type:RESET_CONSTRUCTOR});
+      }
+    } else {
+      history.push('/login');
     }
   }
 
@@ -68,7 +78,7 @@ function BurgerConstructor() {
 
   const total = useMemo(() => {
     let total = 0;
-    if (ingredients.length > 0) ingredients.map((item) => total += items.find(product => item === product._id).price);
+    if (ingredients.length > 0) ingredients.map((item) => total += items.find(product => item.id === product._id).price);
     if (bun != null) {
       total += 2 * items.find(product => product._id === bun).price;
     }
@@ -81,7 +91,7 @@ function BurgerConstructor() {
       <div className={styles.list + ' mt-4'}>
         {(bun != null) && <ConstructorIngredient id={bun} position='top' /> }
         <div className={styles.main} ref={dropTargetSub}>
-          {(ingredients.length > 0) && ingredients.map((product, index) => <ConstructorIngredient id={product} num={index} key={index} />)}
+          {(ingredients.length > 0) && ingredients.map((product, index) => <ConstructorIngredient id={product.id} num={index} k={product.uuid} key={product.uuid} />)}
         </div>
         {(bun != null) && <ConstructorIngredient id={bun} position='bottom' />}
       </div>

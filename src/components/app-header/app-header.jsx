@@ -1,20 +1,22 @@
 import React from 'react';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import styles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function AppHeader() {
+  const { pathname } = useLocation();
   return (
     <header className="mb-10">
       <div className={styles.conteiner}>
         <nav className="pt-4 pb-4 text text_type_main-default">
           <ul className={styles.menu}>
-	        <li className={styles.menu_item}><span className={styles.link}><BurgerIcon type="primary" /><p className={styles.primary + ' ml-2'}>Конструктор</p></span></li>
-	        <li className={styles.menu_item}><span className={styles.link}><ListIcon type="secondary" /><p className={styles.secondary + ' ml-2'}>Лента заказов</p></span></li>
+	        <li className={styles.menu_item}><NavLink to='/' className={styles.link} activeClassName={styles.active}><BurgerIcon type={ (pathname === '/') ? 'primary' : 'secondary' } /><span className="ml-2">Конструктор</span></NavLink></li>
+	        <li className={styles.menu_item}><NavLink to='/lenta' className={styles.link} activeClassName={styles.active}><ListIcon type={ (pathname === '/lenta') ? 'primary' : 'secondary' } /><span className="ml-2">Лента заказов</span></NavLink></li>
 	      </ul>
 	    </nav>
-	    <Logo />
+	    <Link to=''><Logo /></Link>
 	    <div className={styles.auth}>
-	      <span><ProfileIcon type="secondary" /><p className={styles.secondary + ' ml-2 text text_type_main-default'}>Личный кабинет</p></span>
+	      <NavLink to='/profile' className={styles.link} activeClassName={styles.active}><ProfileIcon type={ (pathname === '/profile') ? 'primary' : 'secondary' } /><span className="ml-2 text text_type_main-default">Личный кабинет</span></NavLink>
 	    </div>
 	  </div>
     </header>
