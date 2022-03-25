@@ -1,22 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, FC, SyntheticEvent } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../services/actions/auth';
 import styles from './auth.module.css';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function LoginPage() {
+interface IState {
+  auth:{
+    name:string,
+    email:string,
+    loginRequest:boolean,
+    loginFailed:boolean,
+    logoutRequest:boolean,
+    logoutFailed:boolean,
+    forgotRequest:boolean,
+    forgotFailed:boolean,
+    resetRequest:boolean,
+    resetFailed:boolean,
+    authRequest:boolean,
+    authFailed:boolean,
+    tokenRequest:boolean,
+    tokenFailed:boolean
+  }
+}
+
+export const LoginPage: FC = () => {
   
-  const { logoutRequest } = useSelector(
+  const { logoutRequest } = useSelector<IState,{logoutRequest:boolean}>(
     state => state.auth
   );
   const dispatch = useDispatch();
-  const [form, setValue] = useState({ email: '', password: '' });
-  const onChange = e => {
+  const [form, setValue] = useState({ email:'', password:'' });
+  const onChange = (e:{target: HTMLInputElement}) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const llogin = e => {
+  const llogin = (e:SyntheticEvent) => {
     e.preventDefault();
     dispatch(login(form));
   }

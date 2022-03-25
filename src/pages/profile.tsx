@@ -1,31 +1,54 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, FC, SyntheticEvent } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAuth, updateAuth, logout } from '../services/actions/auth';
 import styles from './profile.module.css';
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function ProfilePage() {
+interface IState {
+  auth:{
+    name:string,
+    email:string,
+    loginRequest:boolean,
+    loginFailed:boolean,
+    logoutRequest:boolean,
+    logoutFailed:boolean,
+    forgotRequest:boolean,
+    forgotFailed:boolean,
+    resetRequest:boolean,
+    resetFailed:boolean,
+    authRequest:boolean,
+    authFailed:boolean,
+    tokenRequest:boolean,
+    tokenFailed:boolean
+  }
+}
+
+export const ProfilePage: FC = () => {
 
   const history = useHistory();
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
-  const { name, email } = useSelector(
+  const { name, email } = useSelector<IState,{name:string, email:string}>(
     state => state.auth
   );
   
   const [form, setValue] = useState({ name:name, email:email, password: '' });
-  const onChange = e => {
+  const onChange = (e:{target: HTMLInputElement}) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
   const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0)
+    setTimeout(() => {
+      if(inputRef && inputRef.current) {
+        inputRef.current.focus()
+      }
+    }, 0)
   }
-  const cancel = e => {
+  const cancel = (e:SyntheticEvent) => {
     e.preventDefault();
     setValue({ name:name, email:email, password: '' });
   }
-  const save = e => {
+  const save = (e:SyntheticEvent) => {
     e.preventDefault();
     dispatch(updateAuth(form));
   }
@@ -34,7 +57,7 @@ export function ProfilePage() {
     history.push('/login')
   };
 
-  const llogout = e => {
+  const llogout = (e:SyntheticEvent) => {
     e.preventDefault();
     dispatch(logout(redirect));
   };

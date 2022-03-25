@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -7,10 +7,10 @@ import Ingredient from '../components/ingredient-page';
 import { getItems } from '../services/actions/ingredients';
 
 
-export const IngredientPage = () => {
+export const IngredientPage: FC = () => {
 
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const { id } = useParams<{id:string}>();
 
   useEffect(
     () => {

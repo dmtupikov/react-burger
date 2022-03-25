@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route';
 import AppHeader from '../app-header/app-header';
@@ -7,10 +7,9 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
 
-function App() {
-  const location = useLocation();
-  const history = useHistory();
-  const modal = (window.history.state != null) ? (window.history.state.modal || false) : false;
+export const App: FC = () => {
+  const location = useLocation<any>();
+  const history = useHistory<any>();
   const background = location.state && location.state.background;
   const returnFromModal = () => {
     history.goBack();
@@ -36,7 +35,7 @@ function App() {
           <HomePage />
         </Route>
         <Route path="/ingredients/:id" exact={true}>
-          { (!modal) ? <IngredientPage /> : <HomePage modal={modal} /> }
+          { (!background) ? <IngredientPage /> : <HomePage /> }
         </Route>
         <ProtectedRoute path="/profile" exact={false}>
           <ProfilePage />

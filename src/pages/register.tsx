@@ -1,29 +1,32 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, FC, SyntheticEvent } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { register } from '../services/actions/auth';
 import styles from './auth.module.css';
 import { EmailInput, Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function RegisterPage() {
+export const RegisterPage: FC = () => {
 
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
   const dispatch = useDispatch();
-
   const [form, setValue] = useState({ name: '', email: '', password: '' });
-  const onChange = e => {
+  const onChange = (e:{target: HTMLInputElement}) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
   const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0)
+    setTimeout(() => {
+      if(inputRef && inputRef.current) {
+        inputRef.current.focus()
+      }
+    }, 0)
   }
 
   const redirect = () => {
     history.push('/')
   };
 
-  const rregister = e => {
+  const rregister = (e:SyntheticEvent) => {
     e.preventDefault();
     dispatch(register(form, redirect));
   };

@@ -7,6 +7,7 @@ import {
 
 const initialState = {
   orders:[],
+  orderObject:null,
   orderRequest:false,
   orderFailed:false
 };

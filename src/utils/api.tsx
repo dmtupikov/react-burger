@@ -1,7 +1,7 @@
 import { getCookie } from './cookie';
 const url = 'https://norma.nomoreparties.space/api/';
 
-const checkResponse = (res) => {
+const checkResponse = (res: Response) => {
   return res.ok ? res.json() : Promise.reject(res.status)
 };
 
@@ -11,7 +11,7 @@ export const getData = async () => {
 }
 
 
-export const getDataOrder = async (ingredients) => {
+export const getDataOrder = async (ingredients:Array<string>) => {
   return fetch(url + 'orders', {
     method: "POST",
     headers: {
@@ -24,7 +24,7 @@ export const getDataOrder = async (ingredients) => {
     .then(checkResponse)
 }
 
-export const forgotPasswordRequest = async (form) => {
+export const forgotPasswordRequest = async (form:{email:string}) => {
   return await fetch(url + 'password-reset', {
     method: 'POST',
     mode: 'cors',
@@ -40,7 +40,7 @@ export const forgotPasswordRequest = async (form) => {
     .then(checkResponse)
 }
 
-export const resetPasswordRequest = async (form) => {
+export const resetPasswordRequest = async (form:{token:string, password:string}) => {
   return await fetch(url + 'password-reset/reset', {
     method: 'POST',
     mode: 'cors',
@@ -56,7 +56,7 @@ export const resetPasswordRequest = async (form) => {
     .then(checkResponse)
 }
 
-export const authRequest = async (form, uri) => {
+export const authRequest = async (form:{name?:string, email:string, password:string}, uri:string) => {
   return await fetch(url + uri, {
     method: 'POST',
     mode: 'cors',
@@ -88,7 +88,8 @@ export const getAuthRequest = async () => {
     .then(checkResponse)
 }
 
-export const updateAuthRequest = async (form) => {
+export const updateAuthRequest = async (form:{name:string, email:string, password:string}) => {
+  console.log(form);
   return await fetch(url + 'auth/user', {
     method: 'PATCH',
     mode: 'cors',
