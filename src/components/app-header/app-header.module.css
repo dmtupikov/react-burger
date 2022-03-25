@@ -1,6 +1,5 @@
 header {	
   background:#1C1C21;
-  border:2px solid #4C4CFF
 }
 .conteiner {
   margin:0 auto;
@@ -28,19 +27,17 @@ nav {
   padding: 16px 20px;
   text-decoration:none;
   cursor:pointer;
+  color:#8585AD;
 }
 .menu_item p {
   margin-top:0;
   margin-bottom:0;
   display:inline-block;
 }
-.primary {
+.active {
   color:#F2F2F3 !important;
 }
-.secondary {
-  color:#8585AD !important;
-}
-.link:hover .secondary {
+.link:hover {
   color:#F2F2F3 !important;
 }
 .auth span {
@@ -48,7 +45,6 @@ nav {
   flex-direction:row;
   justify-content:flex-end;
   align-items:center;
-  min-width:400px;
   padding: 16px 20px;
 }
 .auth p {

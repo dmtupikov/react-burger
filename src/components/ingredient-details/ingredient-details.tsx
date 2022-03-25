@@ -1,12 +1,28 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 import styles from './ingredient-details.module.css';
+import { useSelector } from 'react-redux';
 
-function IngredientDetails({image, name, calories, proteins, fat, carbohydrates}) {
+import { IStateI, IIngredients } from '../burger-ingredients/types';
+
+function IngredientDetails() {
+  const { id } = useParams<{id:string}>();
+  const { items } = useSelector< IStateI, { items: Array<IIngredients> | null }>(
+    state => state.ingredients
+  );
+  const ingredient = (items != null && items.length > 0) ? items.find(i => i._id === id) : {image_large:'',name:'',calories:0,proteins:0,fat:0,carbohydrates:0};
+
+  const image_large = (ingredient && ingredient.image_large) ? ingredient.image_large : '';
+  const name = (ingredient && ingredient.name) ? ingredient.name : '';
+  const calories = (ingredient && ingredient.calories) ? ingredient.calories : 0;
+  const proteins = (ingredient && ingredient.proteins) ? ingredient.proteins : 0;
+  const fat = (ingredient && ingredient.fat) ? ingredient.fat : 0;
+  const carbohydrates = (ingredient && ingredient.carbohydrates) ? ingredient.carbohydrates : '';
+
   return (
     <div className={styles.wrap + ' pt-10 pb-15 pl-10 pr-10'}>
       <p className={styles.header + ' text text_type_main-large'}>Детали ингредиента</p>
-      <img src={image} alt="{name}" />
+      <img src={image_large} alt="{name}" />
       <p className={styles.name + ' text text_type_main-medium mt-4'}>{name}</p>
       <div className={styles.structure + ' mt-8'}>
         <div className={styles.component}>
@@ -26,19 +42,8 @@ function IngredientDetails({image, name, calories, proteins, fat, carbohydrates}
           <p className={styles.component_value + ' text text_type_digits-default mt-2'}>{carbohydrates}</p>
         </div>
       </div>
-
     </div>
   );
 }
 
-IngredientDetails.propTypes = {
-  image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  calories: PropTypes.string.isRequired,
-  proteins: PropTypes.string.isRequired,
-  fat: PropTypes.string.isRequired,
-  carbohydrates: PropTypes.string.isRequired
-};
-
 export default IngredientDetails;
-
