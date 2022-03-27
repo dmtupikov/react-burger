@@ -1,16 +1,17 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './burger-ingredients.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import productPropTypes from '../../utils/product-prop-types';
 
 import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 
+import { IIngredientItem, IStateC } from './types';
 
-const IngredientItem = ({ product }) => {
+
+const IngredientItem: FC<IIngredientItem> = ({ product }) => {
   const location = useLocation();
-  const { ingredients, bun } = useSelector(
+  const { ingredients, bun } = useSelector< IStateC, { ingredients:Array<{id:string, uuid:string}>|null, bun:string|null } >(
     state => state.construct
   );
 
@@ -27,8 +28,8 @@ const IngredientItem = ({ product }) => {
     if (product.type === 'bun') {
       if (bun === product._id) count = 2;
     } else {
-      ingredients.forEach(function(item) {
-        if (item === product._id) count = count+1;
+      (ingredients != null) && ingredients.forEach(function(item:{id:string, uuid:string}) {
+        if (item.id === product._id) count = count+1;
       })
     }
     return count;
@@ -45,10 +46,5 @@ const IngredientItem = ({ product }) => {
     </Link>
   )
 };
-
-IngredientItem.propTypes = {
-  product: productPropTypes.isRequired
-};
-
 
 export default IngredientItem;

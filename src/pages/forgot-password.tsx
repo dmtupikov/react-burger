@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, FC, SyntheticEvent } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { forgotPassword } from '../services/actions/auth';
 import styles from './auth.module.css';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function ForgotPasswordPage() {
+export const ForgotPasswordPage: FC = () => {
 
   const history = useHistory();
   const dispatch = useDispatch();
   const [form, setValue] = useState({ email: '' });
-  const onChange = e => {
+  const onChange = (e:{target: HTMLInputElement}) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -18,7 +18,7 @@ export function ForgotPasswordPage() {
     history.push('/reset-password', {reset:true})
   };
 
-  const forgot = e => {
+  const forgot = (e:SyntheticEvent) => {
     e.preventDefault();
     dispatch(forgotPassword(form, redirect));
   };
@@ -27,7 +27,7 @@ export function ForgotPasswordPage() {
 
   return (
     <div>
-      <div className={styles.conteiner + ' pt-20'}>
+      <div className = { styles.conteiner + ' pt-20' } >
         <form onSubmit={forgot}>
           <h1 className="text text_type_main-medium">Восстановление пароля</h1>
           <div className="mt-6"><EmailInput onChange={onChange} value={form.email} name="email" /></div>

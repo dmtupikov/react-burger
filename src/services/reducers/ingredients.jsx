@@ -7,10 +7,9 @@ import {
 } from '../actions/ingredients';
 
 const initialState = {
-  items:[],
+  items:null,
   itemsRequest:false,
-  itemsFailed:false,
-  itemObject:null
+  itemsFailed:false
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -28,10 +27,10 @@ export const ingredientsReducer = (state = initialState, action) => {
       return { ...initialState, itemsFailed:true };
     }
     case ADD_ITEM_OBJECT: {
-      return { ...state, itemObject: state.items.find(product => product._id === action.id) };
+      return { ...state };
     }
     case RESET_ITEM_OBJECT: {
-      return { ...state, itemObject:initialState.itemObject };
+      return { ...state};
     }
     default: {
       return state;

@@ -1,26 +1,34 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
-import PropTypes from 'prop-types';
 import styles from './home.module.css';
 import BurgerIngredients from '../components/burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../components/burger-constructor/burger-constructor';
 import OrderDetails from '../components/order-details/order-details';
-import IngredientDetails from '../components/ingredient-details/ingredient-details';
 import Modal from '../components/modal/modal';
 
 import { getItems, RESET_ITEM_OBJECT } from '../services/actions/ingredients';
-import {RESET_ORDER_OBJECT} from '../services/actions/order';
+import { RESET_ORDER_OBJECT } from '../services/actions/order';
 
+interface IState {
+  order:{
+    orders:[],
+    orderObject:IOrderObject|null,
+    orderRequest:boolean,
+    orderFailed:boolean
+  }
+}
 
-export function HomePage({ modal }) {
+interface IOrderObject {
+  name:string,
+  number:number
+}
 
-  const { itemObject } = useSelector(
-    state => state.ingredients
-  );
-  const { orderObject } = useSelector(
-    state => state.order
+export const HomePage: FC = () => {
+
+  const orderObject = useSelector<IState, IOrderObject | null>(
+    state => state.order.orderObject
   );
   const dispatch = useDispatch();
 
@@ -38,11 +46,10 @@ export function HomePage({ modal }) {
   );
 
   
-  
   const modalContent = useMemo(() => {
-    let modalContent = (itemObject != null) ? (<IngredientDetails />) : ((orderObject != null) ? (<OrderDetails />) : null);
+    let modalContent = (orderObject != null) ? <OrderDetails /> : null;
     return modalContent;
-  }, [itemObject, orderObject]);
+  }, [orderObject]);
   
   return (
     <div>
@@ -62,7 +69,3 @@ export function HomePage({ modal }) {
     </div>
   );
 }
-
-HomePage.propTypes = {
-  modal: PropTypes.bool
-};

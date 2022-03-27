@@ -7,16 +7,17 @@ import {
 } from '../actions/constructor';
 
 const initialState = {
-  ingredients:[],
+  ingredients:null,
   bun:null
 };
 
 export const constructorReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_INGREDIENT_CONSTRUCTOR: {
+      const ingredients = (state.ingredients != null) ? [ ...state.ingredients, {id:action.id, uuid:action.uuid}] : [{id:action.id, uuid:action.uuid}];
       return { 
         ...state,
-        ingredients: [...state.ingredients, {id:action.id, uuid:action.uuid}]
+        ingredients: ingredients
       }
     }
     case ADD_BUN_CONSTRUCTOR: {

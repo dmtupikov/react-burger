@@ -1,22 +1,26 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, FC, SyntheticEvent } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { resetPassword } from '../services/actions/auth';
 import styles from './auth.module.css';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function ResetPasswordPage() {
+export const ResetPasswordPage: FC = () => {
   
-  const inputRef = useRef(null);
-  const history = useHistory();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const history = useHistory<any>();
   const dispatch = useDispatch();
   const [form, setValue] = useState({ token: '', password: '' });
-  const onChange = e => {
+  const onChange = (e:{target: HTMLInputElement}) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
   const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0)
+    setTimeout(() => {
+      if(inputRef && inputRef.current) {
+        inputRef.current.focus()
+      }
+    }, 0)
   }
   if ((typeof history.location.state == "undefined") || (!history.location.state.reset)) history.push('/forgot-password');
 
@@ -24,7 +28,7 @@ export function ResetPasswordPage() {
     history.push('/')
   };
   
-  const reset = e => {
+  const reset = (e:SyntheticEvent) => {
     e.preventDefault();
     dispatch(resetPassword(form, redirect));
   };
