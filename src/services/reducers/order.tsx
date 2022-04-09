@@ -2,22 +2,32 @@ import {
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS,
   GET_ORDER_FAILED,
-  RESET_ORDER_OBJECT
+  RESET_ORDER_OBJECT,
+  TOrder,
+  TOrdersActions
 } from '../actions/order';
 
-const initialState = {
+
+export type TInitialOrderState = {
+  orders:Array<TOrder>;
+  orderObject:TOrder | null;
+  orderRequest:boolean;
+  orderFailed:boolean;
+};
+
+const initialState : TInitialOrderState = {
   orders:[],
   orderObject:null,
   orderRequest:false,
   orderFailed:false
 };
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action : TOrdersActions) : TInitialOrderState => {
   switch (action.type) {
     case GET_ORDER_REQUEST: {
       return {
         ...state,
-        ordersRequest: true
+        orderRequest:true
       };
     }
     case GET_ORDER_SUCCESS: {

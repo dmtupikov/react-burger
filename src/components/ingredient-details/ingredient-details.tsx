@@ -1,9 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import styles from './ingredient-details.module.css';
 import { useSelector } from 'react-redux';
-
-import { IStateI, IIngredients } from '../burger-ingredients/types';
+import { IStateI } from '../burger-ingredients/types';
+import { IIngredients } from '../../services/actions/ingredients'
+import styles from './ingredient-details.module.css';
 
 function IngredientDetails() {
   const { id } = useParams<{id:string}>();

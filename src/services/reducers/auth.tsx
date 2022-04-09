@@ -22,12 +22,37 @@ import {
   USER_UPDATE_FAILED,
   TOKEN_REQUEST,
   TOKEN_SUCCESS,
-  TOKEN_FAILED
+  TOKEN_FAILED,
+  TAuthActions
 } from '../actions/auth';
 
-const initialState = {
+
+
+export interface IAuth {
+  name:string,
+  email:string,
+  registerRequest:boolean,
+  registerFailed:boolean,
+  loginRequest:boolean,
+  loginFailed:boolean,
+  logoutRequest:boolean,
+  logoutFailed:boolean,
+  forgotRequest:boolean,
+  forgotFailed:boolean,
+  resetRequest:boolean,
+  resetFailed:boolean,
+  authRequest:boolean,
+  authFailed:boolean,
+  tokenRequest:boolean,
+  tokenFailed:boolean,
+}
+
+const initialState : IAuth = {
   name:'',
   email:'',
+
+  registerRequest: false,
+  registerFailed: false,
 
   loginRequest: false,
   loginFailed: false,
@@ -49,7 +74,7 @@ const initialState = {
 };
 
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action : TAuthActions) : IAuth => {
   switch (action.type) {
     case FORGOT_PASSWORD_REQUEST: {
       return { ...state, forgotRequest:true };

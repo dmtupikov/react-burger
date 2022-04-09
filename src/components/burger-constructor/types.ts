@@ -1,31 +1,12 @@
-export interface IIngredients {
-  __v:number;
-  _id:string;
-  calories:number;
-  carbohydrates:number;
-  fat:number;
-  image:string;
-  image_large:string;
-  image_mobile:string;
-  name:string;
-  price:number;
-  proteins:number;
-  type:string;
-};
+import { IIngredients, IIStateI } from '../../services/actions/ingredients'
+import { IConstructor } from '../../services/actions/constructor'
 
 export interface IStateI {
-  ingredients: {
-    items:Array<IIngredients> | null,
-    itemsRequest:boolean,
-    itemsFailed:boolean,
-  }
+  ingredients: IIStateI
 };
 
 export interface IStateC {
-  construct:{
-    ingredients:Array<{id:string, uuid:string}>|null;
-    bun:string|null;
-  }
+  construct:IConstructor
 };
 
 export interface IConstructorIngredient {

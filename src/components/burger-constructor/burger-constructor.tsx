@@ -3,16 +3,13 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
-
-import ConstructorIngredient from './constructor-ingredient';
-import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-
-import styles from './burger-constructor.module.css';
-
 import { ADD_BUN_CONSTRUCTOR, ADD_INGREDIENT_CONSTRUCTOR, MOVE_ITEM_CONSTRUCTOR, RESET_CONSTRUCTOR } from '../../services/actions/constructor';
 import { getOrder } from '../../services/actions/order';
-
-import { IIngredients, IStateI, IStateC } from './types';
+import ConstructorIngredient from './constructor-ingredient';
+import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { IStateI, IStateC } from './types';
+import { IIngredients } from '../../services/actions/ingredients'
+import styles from './burger-constructor.module.css';
 
 
 export const BurgerConstructor: FC = () => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, FC } from 'react';
+import React, { useMemo, FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
@@ -8,7 +8,6 @@ import BurgerConstructor from '../components/burger-constructor/burger-construct
 import OrderDetails from '../components/order-details/order-details';
 import Modal from '../components/modal/modal';
 
-import { getItems, RESET_ITEM_OBJECT } from '../services/actions/ingredients';
 import { RESET_ORDER_OBJECT } from '../services/actions/order';
 
 interface IState {
@@ -34,16 +33,8 @@ export const HomePage: FC = () => {
 
   const handleCloseModal = () => {
     window.history.replaceState(null, '', '/');
-    dispatch({type:RESET_ITEM_OBJECT});
     dispatch({type:RESET_ORDER_OBJECT});
   }
-
-  useEffect(
-    () => {
-      dispatch(getItems());
-    },
-    [dispatch]
-  );
 
   
   const modalContent = useMemo(() => {

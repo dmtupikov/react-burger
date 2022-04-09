@@ -1,17 +1,4 @@
-export interface IIngredients {
-  __v:number;
-  _id:string;
-  calories:number;
-  carbohydrates:number;
-  fat:number;
-  image:string;
-  image_large:string;
-  image_mobile:string;
-  name:string;
-  price:number;
-  proteins:number;
-  type:string;
-};
+import { IIngredients } from '../../services/actions/ingredients'
 
 export interface IStateI {
   ingredients: {

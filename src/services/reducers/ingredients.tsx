@@ -2,17 +2,17 @@ import {
   GET_ITEMS_REQUEST,
   GET_ITEMS_SUCCESS,
   GET_ITEMS_FAILED,
-  ADD_ITEM_OBJECT,
-  RESET_ITEM_OBJECT
+  IIStateI,
+  TIngredientsActions
 } from '../actions/ingredients';
 
-const initialState = {
+const initialState : IIStateI = {
   items:null,
   itemsRequest:false,
   itemsFailed:false
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (state = initialState, action : TIngredientsActions) : IIStateI => {
   switch (action.type) {
     case GET_ITEMS_REQUEST: {
       return {
@@ -26,12 +26,8 @@ export const ingredientsReducer = (state = initialState, action) => {
     case GET_ITEMS_FAILED: {
       return { ...initialState, itemsFailed:true };
     }
-    case ADD_ITEM_OBJECT: {
-      return { ...state };
-    }
-    case RESET_ITEM_OBJECT: {
-      return { ...state};
-    }
+
+
     default: {
       return state;
     }

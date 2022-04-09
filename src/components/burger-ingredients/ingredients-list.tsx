@@ -1,10 +1,10 @@
 import React, { forwardRef } from 'react';
-import styles from './burger-ingredients.module.css';
 import IngredientItem from './ingredient-item';
-
 import { useSelector } from 'react-redux';
+import { IIngredientsList, IStateI } from './types';
+import styles from './burger-ingredients.module.css';
 
-import { IIngredients, IStateI, IIngredientsList } from './types';
+import { IIngredients } from '../../services/actions/ingredients'
 
 
 const IngredientsList = forwardRef<HTMLDivElement, IIngredientsList>(({ name, ename }, ref ) => {

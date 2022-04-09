@@ -1,12 +1,10 @@
 import React, { useMemo, FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import styles from './burger-ingredients.module.css';
-import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-
 import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
-
+import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IIngredientItem, IStateC } from './types';
+import styles from './burger-ingredients.module.css';
 
 
 const IngredientItem: FC<IIngredientItem> = ({ product }) => {
