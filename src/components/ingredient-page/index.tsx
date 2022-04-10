@@ -1,15 +1,12 @@
 import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
-import styles from './ingredient-page.module.css';
-
-import { IStateI } from '../burger-ingredients/types';
+import { useSelector } from '../../services/hooks';
 import { IIngredients } from '../../services/actions/ingredients'
+import styles from './ingredient-page.module.css';
 
 const Ingredient: FC = () => {
   const { id } = useParams<{id:string}>();
-  const { items } = useSelector< IStateI, { items: Array<IIngredients> | null }>(
+  const { items } = useSelector(
     state => state.ingredients
   );
   const ingredient = (items != null && items.length > 0) ? items.find(i => i._id === id) : {image_large:'',name:'',calories:0,proteins:0,fat:0,carbohydrates:0};

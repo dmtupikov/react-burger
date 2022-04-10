@@ -1,10 +1,8 @@
 import React, { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { getOrderDate } from '../../utils/date';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IStateI } from '../burger-ingredients/types';
-import { IIngredients } from '../../services/actions/ingredients'
 import { TOrder } from '../../services/types';
 import styles from './feed.module.css';
 
@@ -17,7 +15,7 @@ const FeedItem: FC<TFeedItem> = ({order}) => {
   const pathName = (location.pathname === '/feed') ? `/feed/${order.number}` : `/profile/orders/${order.number}`;
   const date = getOrderDate(order);
 
-  const { items } = useSelector<IStateI, { items: Array<IIngredients> | null }>(
+  const { items } = useSelector(
     state => state.ingredients
   );
 

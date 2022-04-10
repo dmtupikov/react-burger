@@ -1,12 +1,10 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { TOrder } from '../../services/actions/order'
-import { TInitialOrderState } from '../../services/reducers/order'
+import { useSelector } from '../../services/hooks';
 import done from '../../images/done.svg';
 import styles from './order-details.module.css';
 
 function OrderDetails() {
-  const { orderObject } = useSelector<{ order : TInitialOrderState }, {orderObject : TOrder | null}>(
+  const { orderObject } = useSelector(
     state => state.order
   );
 

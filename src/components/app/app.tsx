@@ -77,14 +77,14 @@ export const App: FC = () => {
       {background && (
         <Route path='/feed/:id' exact={true}>
           <Modal onClose={returnFromModal}>
-            <FeedDetails />
+            <FeedDetails isProfile={false} />
           </Modal>
         </Route>
       )}
       {background && (
         <Route path='/profile/orders/:id' exact={true}>
           <Modal onClose={returnFromModal}>
-            <FeedDetails />
+            <FeedDetails isProfile={true} />
           </Modal>
         </Route>
       )}

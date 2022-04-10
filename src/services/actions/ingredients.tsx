@@ -1,5 +1,5 @@
 import { getData } from '../../utils/api';
-import { Dispatch } from 'redux';
+import { AppThunk, AppDispatch } from '../types';
 
 export const GET_ITEMS_REQUEST : 'GET_ITEMS_REQUEST' = 'GET_ITEMS_REQUEST';
 export const GET_ITEMS_SUCCESS : 'GET_ITEMS_SUCCESS' = 'GET_ITEMS_SUCCESS';
@@ -43,8 +43,8 @@ export type TIngredientsActions =
   | IGetItemsSuccess
   | IGetItemsFailed;
 
-export function getItems() {
-  return function(dispatch : Dispatch) {
+export const getItems : AppThunk = () => {
+  return function(dispatch : AppDispatch) {
     dispatch({
       type: GET_ITEMS_REQUEST
     });

@@ -1,8 +1,7 @@
 import React, { useEffect, FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../services/hooks';
 import ProfileMenu from '../components/profile-menu/profile-menu';
 import FeedItem from '../components/feed/feed-item';
-import { TInitialSocketState, TOrder } from '../services/types';
 import styles from './profile.module.css';
 
 
@@ -17,7 +16,7 @@ export const ProfileOrdersPage: FC = () => {
     };
   }, [dispatch]);
 
-  const { orders } = useSelector<{ wsru : TInitialSocketState }, { orders : Array<TOrder> }>(
+  const { orders } = useSelector(
     state => state.wsru.data
   );
 

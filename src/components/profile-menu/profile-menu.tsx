@@ -1,6 +1,6 @@
 import React, { SyntheticEvent } from 'react';
 import { useHistory, NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { logout } from '../../services/actions/auth';
 import styles from './profile-menu.module.css';
 

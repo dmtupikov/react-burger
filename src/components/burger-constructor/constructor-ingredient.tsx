@@ -1,16 +1,21 @@
 import React, { useRef, FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { useDrag } from 'react-dnd';
 import { DELETE_ITEM_CONSTRUCTOR } from '../../services/actions/constructor';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IStateI, IConstructorIngredient } from './types';
-import { IIngredients } from '../../services/actions/ingredients'
 import styles from './burger-constructor.module.css';
 
 
+interface IConstructorIngredient {
+  id:string;
+  num?:number;
+  position?:"top" | "bottom";
+  k?:string;
+}
+
 const ConstructorIngredient: FC<IConstructorIngredient> = ({id, num, position, k}) => {
   const ref = useRef(null);
-  const { items } = useSelector<IStateI, { items: Array<IIngredients> | null }>(
+  const { items } = useSelector(
     state => state.ingredients
   );
   const dispatch = useDispatch();

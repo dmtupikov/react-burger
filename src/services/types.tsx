@@ -6,6 +6,8 @@ import { TAuthActions } from './actions/auth';
 import { TOrdersActions } from './actions/order';
 import { TIngredientsActions } from './actions/ingredients';
 import { TConstructorActions } from './actions/constructor';
+import { TWSActions } from './actions/wsActions';
+import { TWSActionsUser } from './actions/wsActionsUser';
 
 
 export type TWsActions = {
@@ -45,7 +47,10 @@ export type RootState = ReturnType<typeof store.getState>;
 export type TApplicationActions =
   | TIngredientsActions
   | TConstructorActions
-  | TAuthActions;
+  | TOrdersActions
+  | TAuthActions
+  | TWSActions
+  | TWSActionsUser;
 
 export type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, Action, RootState, TApplicationActions>

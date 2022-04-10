@@ -1,20 +1,16 @@
 import React, { useState, useRef, useEffect, FC, SyntheticEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../services/hooks';
 import { getAuth, updateAuth } from '../services/actions/auth';
 import ProfileMenu from '../components/profile-menu/profile-menu';
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IAuth } from '../services/reducers/auth'
 import styles from './profile.module.css';
 
-interface IState {
-  auth:IAuth
-}
 
 export const ProfilePage: FC = () => {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
-  const { name, email } = useSelector<IState,{name:string, email:string}>(
+  const { name, email } = useSelector(
     state => state.auth
   );
   

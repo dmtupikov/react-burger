@@ -151,8 +151,7 @@ export type TAuthActions =
   | ITokenSuccess
   | ITokenFailed;
 
-export type TFuncVoid = () => void;
-export function forgotPassword(form : {email:string}, redirect : () => void) {
+export const forgotPassword: AppThunk = (form : {email:string}, redirect : () => void) => {
   return function(dispatch : AppDispatch) {
     dispatch({
       type: FORGOT_PASSWORD_REQUEST
@@ -353,7 +352,6 @@ export const getAuth : AppThunk = () => {
 export const getAccessToken : AppThunk = () => {
   return function (dispatch) {
     dispatch({ type: TOKEN_REQUEST });
-    console.log('asd');
     getAccessTokenRequest()
       .then((res) => {
         const accessToken = res.accessToken.split('Bearer ')[1];

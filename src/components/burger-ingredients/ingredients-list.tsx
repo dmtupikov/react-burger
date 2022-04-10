@@ -1,14 +1,16 @@
 import React, { forwardRef } from 'react';
 import IngredientItem from './ingredient-item';
-import { useSelector } from 'react-redux';
-import { IIngredientsList, IStateI } from './types';
+import { useSelector } from '../../services/hooks';
 import styles from './burger-ingredients.module.css';
 
-import { IIngredients } from '../../services/actions/ingredients'
 
+interface IIngredientsList {
+  name:string;
+  ename:string;
+}
 
 const IngredientsList = forwardRef<HTMLDivElement, IIngredientsList>(({ name, ename }, ref ) => {
-  const { items } = useSelector< IStateI, { items: Array<IIngredients> | null }>(
+  const { items } = useSelector(
     state => state.ingredients
   );
 

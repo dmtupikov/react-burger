@@ -1,13 +1,11 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { IStateI } from '../burger-ingredients/types';
-import { IIngredients } from '../../services/actions/ingredients'
+import { useSelector } from '../../services/hooks';
 import styles from './ingredient-details.module.css';
 
 function IngredientDetails() {
   const { id } = useParams<{id:string}>();
-  const { items } = useSelector< IStateI, { items: Array<IIngredients> | null }>(
+  const { items } = useSelector(
     state => state.ingredients
   );
   const ingredient = (items != null && items.length > 0) ? items.find(i => i._id === id) : {image_large:'',name:'',calories:0,proteins:0,fat:0,carbohydrates:0};

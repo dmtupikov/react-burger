@@ -1,32 +1,14 @@
 import React, { useState, FC, SyntheticEvent } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../services/hooks';
 import { login } from '../services/actions/auth';
 import styles from './auth.module.css';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-interface IState {
-  auth:{
-    name:string,
-    email:string,
-    loginRequest:boolean,
-    loginFailed:boolean,
-    logoutRequest:boolean,
-    logoutFailed:boolean,
-    forgotRequest:boolean,
-    forgotFailed:boolean,
-    resetRequest:boolean,
-    resetFailed:boolean,
-    authRequest:boolean,
-    authFailed:boolean,
-    tokenRequest:boolean,
-    tokenFailed:boolean
-  }
-}
 
 export const LoginPage: FC = () => {
   
-  const { logoutRequest } = useSelector<IState,{logoutRequest:boolean}>(
+  const { logoutRequest } = useSelector(
     state => state.auth
   );
   const dispatch = useDispatch();

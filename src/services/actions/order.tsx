@@ -1,5 +1,5 @@
 import { getDataOrder } from '../../utils/api';
-import { Dispatch } from 'redux';
+import { AppThunk, AppDispatch } from '../types';
 
 export const GET_ORDER_REQUEST : 'GET_ORDER_REQUEST' = 'GET_ORDER_REQUEST';
 export const GET_ORDER_SUCCESS : 'GET_ORDER_SUCCESS' = 'GET_ORDER_SUCCESS';
@@ -35,8 +35,8 @@ export type TOrdersActions =
   | IResetOrderFailed;
 
 
-export function getOrder(ingredients : Array<string>) {
-  return function(dispatch : Dispatch) {
+export const getOrder : AppThunk = (ingredients : Array<string>)  => {
+  return function(dispatch : AppDispatch) {
     dispatch({
       type: GET_ORDER_REQUEST
     });

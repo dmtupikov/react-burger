@@ -1,5 +1,5 @@
 import React, { useMemo, FC } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../services/hooks';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import styles from './home.module.css';
@@ -7,26 +7,12 @@ import BurgerIngredients from '../components/burger-ingredients/burger-ingredien
 import BurgerConstructor from '../components/burger-constructor/burger-constructor';
 import OrderDetails from '../components/order-details/order-details';
 import Modal from '../components/modal/modal';
-
 import { RESET_ORDER_OBJECT } from '../services/actions/order';
 
-interface IState {
-  order:{
-    orders:[],
-    orderObject:IOrderObject|null,
-    orderRequest:boolean,
-    orderFailed:boolean
-  }
-}
-
-interface IOrderObject {
-  name:string,
-  number:number
-}
 
 export const HomePage: FC = () => {
 
-  const orderObject = useSelector<IState, IOrderObject | null>(
+  const orderObject = useSelector(
     state => state.order.orderObject
   );
   const dispatch = useDispatch();

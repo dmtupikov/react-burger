@@ -1,24 +1,25 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { useParams } from 'react-router-dom';
 import { getOrderDate } from '../../utils/date';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IStateI } from '../burger-ingredients/types';
-import { TInitialSocketState, TOrder } from '../../services/types';
+import { TOrder } from '../../services/types';
 import styles from './feed-details.module.css';
 
-import { IIngredients } from '../../services/actions/ingredients'
 
+type TFeedDetails = {
+  isProfile:boolean;
+};
 
-const FeedDetails: FC = () => {
+const FeedDetails: FC<TFeedDetails> = ({ isProfile }) => {
   const { id } = useParams<{id:string}>();
-  const { orders } = useSelector<{ wsr : TInitialSocketState }, { orders : Array<TOrder> }>(
-    state => state.wsr.data
+  const { orders } = useSelector(
+    state => (isProfile) ? state.wsru.data : state.wsr.data
   );
-  const { items } = useSelector<IStateI, { items: Array<IIngredients> | null }>(
+  const { items } = useSelector(
     state => state.ingredients
   )
-  const order = (orders.length > 0) && orders.find((item:TOrder) => item.number === id);
+  const order = (orders.length > 0) && orders.find((item:TOrder) => item.number == id);
   const date = (order) ? getOrderDate(order) : null;
 
   let total = 0;

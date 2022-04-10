@@ -1,12 +1,12 @@
 import React, { FC, useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { TInitialSocketState, TWSData, TOrder } from '../../services/types';
+import { useSelector } from '../../services/hooks';
+import { TOrder } from '../../services/types';
 import styles from './feed.module.css';
 
 
 const FeedInfo: FC = () => {
   
-  const { data } = useSelector<{ wsr: TInitialSocketState }, { data : TWSData }>(
+  const { data } = useSelector(
     state => state.wsr
   );
 

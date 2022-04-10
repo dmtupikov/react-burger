@@ -1,23 +1,21 @@
 import React, { useMemo, FC } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import { ADD_BUN_CONSTRUCTOR, ADD_INGREDIENT_CONSTRUCTOR, MOVE_ITEM_CONSTRUCTOR, RESET_CONSTRUCTOR } from '../../services/actions/constructor';
 import { getOrder } from '../../services/actions/order';
 import ConstructorIngredient from './constructor-ingredient';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IStateI, IStateC } from './types';
-import { IIngredients } from '../../services/actions/ingredients'
 import styles from './burger-constructor.module.css';
 
 
 export const BurgerConstructor: FC = () => {
 
-  const { items } = useSelector<IStateI, { items: Array<IIngredients> | null }>(
+  const { items } = useSelector(
     state => state.ingredients
   );
-  const { ingredients, bun } = useSelector< IStateC, { ingredients:Array<{id:string, uuid:string}>|null, bun:string|null } >(
+  const { ingredients, bun } = useSelector(
     state => state.construct
   );
   const dispatch = useDispatch();

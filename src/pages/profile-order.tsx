@@ -1,5 +1,5 @@
 import React, { useEffect, FC } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../services/hooks';
 import FeedDetails from '../components/feed-details/feed-details';
 
 
@@ -15,7 +15,7 @@ export const ProfileOrderPage: FC = () => {
 
   return (
     <main>
-      <FeedDetails />
+      <FeedDetails isProfile={true} />
     </main>
   )
 };

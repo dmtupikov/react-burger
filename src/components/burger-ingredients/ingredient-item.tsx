@@ -1,15 +1,19 @@
 import React, { useMemo, FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { useDrag } from 'react-dnd';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IIngredientItem, IStateC } from './types';
+import { IIngredients } from '../../services/actions/ingredients'
 import styles from './burger-ingredients.module.css';
 
 
+export interface IIngredientItem {
+  product:IIngredients;
+}
+
 const IngredientItem: FC<IIngredientItem> = ({ product }) => {
   const location = useLocation();
-  const { ingredients, bun } = useSelector< IStateC, { ingredients:Array<{id:string, uuid:string}>|null, bun:string|null } >(
+  const { ingredients, bun } = useSelector(
     state => state.construct
   );
 

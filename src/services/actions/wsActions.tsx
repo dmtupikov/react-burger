@@ -8,7 +8,6 @@ export const WS_CONNECTION_CLOSED : 'WS_CONNECTION_CLOSED' = 'WS_CONNECTION_CLOS
 export const WS_GET_MESSAGE : 'WS_GET_MESSAGE' = 'WS_GET_MESSAGE';
 export const WS_SEND_MESSAGE : 'WS_SEND_MESSAGE' = 'WS_SEND_MESSAGE';
 
-
 export const wsActions = {
   wsInit: WS_CONNECTION_START,
   wsSendMessage: WS_SEND_MESSAGE,

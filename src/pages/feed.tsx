@@ -1,14 +1,14 @@
 import React, { FC, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../services/hooks';
 import FeedItem from '../components/feed/feed-item';
 import FeedInfo from '../components/feed/feed-info';
-import { TInitialSocketState, TOrder } from '../services/types';
+import { TOrder } from '../services/types';
 import styles from './home.module.css';
 
 
 export const FeedPage: FC = () => {
   const dispatch = useDispatch();
-  const { orders } = useSelector<{ wsr : TInitialSocketState }, { orders : Array<TOrder> }>(
+  const { orders } = useSelector(
     state => state.wsr.data
   );
   
