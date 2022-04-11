@@ -33,7 +33,6 @@ export const ProfilePage: FC = () => {
     e.preventDefault();
     dispatch(updateAuth(form));
   }
- 
   useEffect(
     () => {
       dispatch(getAuth());

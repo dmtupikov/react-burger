@@ -21,7 +21,6 @@ export const HomePage: FC = () => {
     window.history.replaceState(null, '', '/');
     dispatch({type:RESET_ORDER_OBJECT});
   }
-
   
   const modalContent = useMemo(() => {
     let modalContent = (orderObject != null) ? <OrderDetails /> : null;

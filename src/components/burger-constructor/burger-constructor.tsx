@@ -1,13 +1,5 @@
 import React, { useMemo, FC } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from '../../services/hooks';
-import { useDrop } from 'react-dnd';
-import { v4 as uuidv4 } from 'uuid';
-import { ADD_BUN_CONSTRUCTOR, ADD_INGREDIENT_CONSTRUCTOR, MOVE_ITEM_CONSTRUCTOR, RESET_CONSTRUCTOR } from '../../services/actions/constructor';
-import { getOrder } from '../../services/actions/order';
-import ConstructorIngredient from './constructor-ingredient';
-import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './burger-constructor.module.css';
 
 
 export const BurgerConstructor: FC = () => {

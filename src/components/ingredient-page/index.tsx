@@ -10,7 +10,6 @@ const Ingredient: FC = () => {
     state => state.ingredients
   );
   const ingredient = (items != null && items.length > 0) ? items.find(i => i._id === id) : {image_large:'',name:'',calories:0,proteins:0,fat:0,carbohydrates:0};
-
   const image_large = (ingredient && ingredient.image_large) ? ingredient.image_large : '';
   const name = (ingredient && ingredient.name) ? ingredient.name : '';
   const calories = (ingredient && ingredient.calories) ? ingredient.calories : 0;
