@@ -4,7 +4,6 @@
 .header {
   height:64px;
   line-height:64px;
-  text-align:left;
 }
 .structure {
   display:inline-flex;

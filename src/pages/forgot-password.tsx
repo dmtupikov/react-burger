@@ -1,6 +1,6 @@
 import React, { useState, FC, SyntheticEvent } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../services/hooks';
 import { forgotPassword } from '../services/actions/auth';
 import styles from './auth.module.css';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';

@@ -2,7 +2,7 @@ import { getCookie } from './cookie';
 const url = 'https://norma.nomoreparties.space/api/';
 
 const checkResponse = (res: Response) => {
-  return res.ok ? res.json() : Promise.reject(res.status)
+  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err))
 };
 
 export const getData = async () => {
@@ -15,7 +15,8 @@ export const getDataOrder = async (ingredients:Array<string>) => {
   return fetch(url + 'orders', {
     method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getCookie('token')}`
     },
     body: JSON.stringify({
       ingredients: ingredients,
@@ -80,7 +81,7 @@ export const getAuthRequest = async () => {
     credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${getCookie('token')}`
+      Authorization: `Bearer ${getCookie('token')}`,
     },
     redirect: 'follow',
     referrerPolicy: 'no-referrer'

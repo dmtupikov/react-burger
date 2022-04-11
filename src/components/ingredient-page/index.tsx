@@ -1,17 +1,15 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
-
+import { useParams } from 'react-router-dom';
+import { useSelector } from '../../services/hooks';
+import { IIngredients } from '../../services/actions/ingredients'
 import styles from './ingredient-page.module.css';
 
-import { IStateI, IIngredients, IIngredient } from '../burger-ingredients/types';
-
-const Ingredient: FC<IIngredient> = ({ product }) => {
-
-  const { items } = useSelector< IStateI, { items: Array<IIngredients> | null }>(
+const Ingredient: FC = () => {
+  const { id } = useParams<{id:string}>();
+  const { items } = useSelector(
     state => state.ingredients
   );
-  const ingredient = (items != null && items.length > 0) ? items.find(i => i._id === product) : {image_large:'',name:'',calories:0,proteins:0,fat:0,carbohydrates:0};
-
+  const ingredient = (items != null && items.length > 0) ? items.find(i => i._id === id) : {image_large:'',name:'',calories:0,proteins:0,fat:0,carbohydrates:0};
   const image_large = (ingredient && ingredient.image_large) ? ingredient.image_large : '';
   const name = (ingredient && ingredient.name) ? ingredient.name : '';
   const calories = (ingredient && ingredient.calories) ? ingredient.calories : 0;
@@ -42,7 +40,6 @@ const Ingredient: FC<IIngredient> = ({ product }) => {
           <p className={styles.component_value + ' text text_type_digits-default mt-2'}>{carbohydrates}</p>
         </div>
       </div>
-
     </div>
   );
 };

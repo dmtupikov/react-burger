@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, FC } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useMemo, FC } from 'react';
+import { useSelector, useDispatch } from '../services/hooks';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import styles from './home.module.css';
@@ -7,44 +7,20 @@ import BurgerIngredients from '../components/burger-ingredients/burger-ingredien
 import BurgerConstructor from '../components/burger-constructor/burger-constructor';
 import OrderDetails from '../components/order-details/order-details';
 import Modal from '../components/modal/modal';
-
-import { getItems, RESET_ITEM_OBJECT } from '../services/actions/ingredients';
 import { RESET_ORDER_OBJECT } from '../services/actions/order';
 
-interface IState {
-  order:{
-    orders:[],
-    orderObject:IOrderObject|null,
-    orderRequest:boolean,
-    orderFailed:boolean
-  }
-}
-
-interface IOrderObject {
-  name:string,
-  number:number
-}
 
 export const HomePage: FC = () => {
 
-  const orderObject = useSelector<IState, IOrderObject | null>(
+  const orderObject = useSelector(
     state => state.order.orderObject
   );
   const dispatch = useDispatch();
 
   const handleCloseModal = () => {
     window.history.replaceState(null, '', '/');
-    dispatch({type:RESET_ITEM_OBJECT});
     dispatch({type:RESET_ORDER_OBJECT});
   }
-
-  useEffect(
-    () => {
-      dispatch(getItems());
-    },
-    [dispatch]
-  );
-
   
   const modalContent = useMemo(() => {
     let modalContent = (orderObject != null) ? <OrderDetails /> : null;
