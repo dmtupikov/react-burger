@@ -1,4 +1,4 @@
-Проект React: Stellar-burgers
+# Проект React: Stellar-burgers
 
 Ссылка на проект https://burger.tdv.nomoredomains.work/
 
