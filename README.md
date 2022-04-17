@@ -1,9 +1,9 @@
 # Проект React: Stellar-burgers
 
-Ссылка на проект https://burger.tdv.nomoredomains.work/
+## Ссылка на проект https://burger.tdv.nomoredomains.work/
 
 
-Языки/инструменты
+## Языки/инструменты
 
     JS (React, Redux, TypeScript)
     HTML5
@@ -16,21 +16,21 @@
     Git  
 
 
-Запуск приложения
+## Запуск приложения
 
     Склонировать репозиторий ( git clone https://github.com/dmtupikov/react-burger.git )
 
-# установка зависимостей
+## установка зависимостей
     $ npm install
 
-# запуск приложения на localhost:3000
+## запуск приложения на localhost:3000
     $ npm run start
 
-# сборка приложения
+## сборка приложения
     $ npm run build
 
-# тестирование приложения (Cypress)
+## тестирование приложения (Cypress)
     $ npm run cypress
 
-# тестирование приложения
+## тестирование приложения
     $ npm run test
