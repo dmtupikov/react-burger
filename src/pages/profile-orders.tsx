@@ -1,6 +1,6 @@
 import React, { useEffect, FC } from 'react';
 import { useDispatch, useSelector } from '../services/hooks';
-import { WS_CONNECTION_START_USER, WS_CONNECTION_CLOSED_USER } from '../services/actions/wsActions';
+import { WS_CONNECTION_START_USER, WS_CONNECTION_CLOSED_USER } from '../services/actions/wsActionsUser';
 import ProfileMenu from '../components/profile-menu/profile-menu';
 import FeedItem from '../components/feed/feed-item';
 import styles from './profile.module.css';
