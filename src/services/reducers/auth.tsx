@@ -27,7 +27,6 @@ import {
 } from '../actions/auth';
 
 
-
 export interface IAuth {
   name:string,
   email:string,
