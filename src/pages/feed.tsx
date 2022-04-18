@@ -1,5 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from '../services/hooks';
+import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../services/actions/wsActions';
 import FeedItem from '../components/feed/feed-item';
 import FeedInfo from '../components/feed/feed-info';
 import { TOrder } from '../services/types';
@@ -13,9 +14,9 @@ export const FeedPage: FC = () => {
   );
   
   useEffect(() => {
-    dispatch({ type: 'WS_CONNECTION_START' });
+    dispatch({ type: WS_CONNECTION_START });
     return () => {
-      dispatch({ type: 'WS_CONNECTION_CLOSED' });
+      dispatch({ type: WS_CONNECTION_CLOSED });
     };
   }, [dispatch]);
 

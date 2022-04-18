@@ -29,5 +29,15 @@ export function setCookie(name:string, value:string | number | boolean | null, p
 }
 
 export function deleteCookie(name:string) {
-  setCookie(name, null, { expires: -1 });
+  setCookie(name, null, {
+    expires: -1,
+    path: '/'
+  })
 }
+
+export const getTokens = (res: { accessToken:string, refreshToken:string, success:boolean} ) => {
+  const accessToken = res.accessToken.split('Bearer ')[1];
+  const refreshToken = res.refreshToken;
+  setCookie('token', accessToken);
+  localStorage.setItem('refreshToken', refreshToken);
+};

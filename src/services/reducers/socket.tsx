@@ -18,7 +18,7 @@ export const wsReducer = (state = iInitialSocketState, action: TWSActions): TIni
       return {
         ...state,
         wsConnected: true,
-        error: undefined,
+        error: undefined
       };
     case WS_CONNECTION_ERROR:
       return {

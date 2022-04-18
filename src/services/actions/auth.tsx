@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router-dom';
 import { forgotPasswordRequest, resetPasswordRequest, authRequest, logoutRequest, getAuthRequest, updateAuthRequest, getAccessTokenRequest } from '../../utils/api';
-import { deleteCookie, setCookie } from '../../utils/cookie';
+import { deleteCookie, getTokens } from '../../utils/cookie';
 import { AppThunk, AppDispatch } from '../types';
 
 export const FORGOT_PASSWORD_REQUEST : 'FORGOT_PASSWORD_REQUEST' = 'FORGOT_PASSWORD_REQUEST';
@@ -210,10 +210,7 @@ export const register : AppThunk = (form : {name:string, email:string, password:
     });
     authRequest(form, 'auth/register')
       .then((res) => {
-        const accessToken = res.accessToken.split('Bearer ')[1];
-        const refreshToken = res.refreshToken;
-        setCookie('token', accessToken, { maxAge: 30000, secure: false, sameSite: "Lax" });
-        localStorage.setItem('refreshToken', refreshToken);
+        getTokens(res);
         if (res && res.success) {
           dispatch({
             type: REGISTER_SUCCESS,
@@ -241,10 +238,7 @@ export const login : AppThunk = (form : {email:string, password:string}) => {
     });
     authRequest(form, 'auth/login')
       .then((res) => {
-        const accessToken = res.accessToken.split('Bearer ')[1];
-        const refreshToken = res.refreshToken;
-        setCookie('token', accessToken, { maxAge: 30000, secure: false, sameSite: "Lax" });
-        localStorage.setItem('refreshToken', refreshToken);
+        getTokens(res);
         if (res && res.success) {
           dispatch({
             type: LOGIN_SUCCESS,
@@ -354,10 +348,7 @@ export const getAccessToken : AppThunk = () => {
     dispatch({ type: TOKEN_REQUEST });
     getAccessTokenRequest()
       .then((res) => {
-        const accessToken = res.accessToken.split('Bearer ')[1];
-        const refreshToken = res.refreshToken;
-        setCookie('token', accessToken, { maxAge: 30000, secure: false, sameSite: "Lax" });
-        localStorage.setItem('refreshToken', refreshToken);
+        getTokens(res);
         if (res && res.success) {
           dispatch({ 
             type: TOKEN_SUCCESS 
